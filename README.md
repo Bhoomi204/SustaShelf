@@ -126,7 +126,7 @@ Total Estimated Value: ₹186.62
 
 ### Repository
 
-👉 **[View ScrapBot Repository]([SCRAPBOT_REPOSITORY_URL](https://github.com/Bhoomi204/smart-recycle-chatbot))**
+👉 **[View ScrapBot Repository]((https://github.com/Bhoomi204/smart-recycle-chatbot))**
 
 ---
 
@@ -187,7 +187,7 @@ Historical / Synthetic Data
 
 ### Repository
 
-👉 **[View Predictive Metal Pricing Repository]([PREDICTIVE_PRICING_REPOSITORY_URL](https://github.com/Bhoomi204/predictive-demand-analysis))**
+👉 **[View Predictive Metal Pricing Repository]((https://github.com/Bhoomi204/predictive-demand-analysis))**
 
 > **Note:** The current forecasting implementation uses synthetic data for demonstration. It is structured to support replacement with real historical or database-backed pricing data.
 
