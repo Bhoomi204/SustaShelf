@@ -126,7 +126,7 @@ Total Estimated Value: ₹186.62
 
 ### Repository
 
-👉 **[View ScrapBot Repository]((https://github.com/Bhoomi204/smart-recycle-chatbot))**
+👉 **[View ScrapBot Repository](https://github.com/Bhoomi204/smart-recycle-chatbot)**
 
 ---
 
@@ -187,7 +187,7 @@ Historical / Synthetic Data
 
 ### Repository
 
-👉 **[View Predictive Metal Pricing Repository]((https://github.com/Bhoomi204/predictive-demand-analysis))**
+👉 **[View Predictive Metal Pricing Repository](https://github.com/Bhoomi204/predictive-demand-analysis)**
 
 > **Note:** The current forecasting implementation uses synthetic data for demonstration. It is structured to support replacement with real historical or database-backed pricing data.
 
@@ -325,13 +325,13 @@ Each module currently has its own setup and deployment instructions.
 
 See the dedicated repository:
 
-👉 **[ScrapBot Setup & Documentation]([SCRAPBOT_REPOSITORY_URL](https://github.com/Bhoomi204/smart-recycle-chatbot))**
+👉 **[ScrapBot Setup & Documentation](https://github.com/Bhoomi204/smart-recycle-chatbot)**
 
 ### Predictive Metal Pricing
 
 See the dedicated repository:
 
-👉 **[Predictive Pricing Setup & Documentation]([PREDICTIVE_PRICING_REPOSITORY_URL](https://github.com/Bhoomi204/predictive-demand-analysis))**
+👉 **[Predictive Pricing Setup & Documentation](https://github.com/Bhoomi204/predictive-demand-analysis)**
 
 ---
 
