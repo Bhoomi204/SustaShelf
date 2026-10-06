@@ -1,367 +1,195 @@
-# ♻️ SustaShelf — Smart Scrap Management Platform
+# ♻️ SustaShelf | Smart Scrap Management & AI Valuation Platform
 
-> An AI-powered smart waste-management platform designed to automate **scrap identification, valuation, and collection**.
-
-SustaShelf aims to simplify the process of recycling and scrap collection by combining **computer vision, real-time metal pricing, predictive analytics, and automated communication** into a single ecosystem.
-
-The project is organized into multiple modules, each responsible for a specific part of the scrap-management workflow.
+**SustaShelf** is an end-to-end AI-powered circular economy ecosystem designed to digitize scrap waste identification, valuation, collection, and commodity price forecasting. By combining computer vision, real-time metal spot rates, automated SMS logistics, and time-series market forecasting, SustaShelf bridges the gap between individual recyclers, local scrap collectors (*Kabadiwalas*), and industrial buyers.
 
 ---
 
-## 🚀 Project Overview
+## 🏗️ Unified Ecosystem Architecture
 
-Traditional scrap collection often involves manual identification of recyclable materials, uncertain pricing, and fragmented communication between customers and scrap collectors.
+SustaShelf operates across two core micro-systems: an **Operational Collection Engine (ScrapBot)** for real-time transactions, and a **Strategic Market Engine (Predictive Analytics)** for long-term commodity price intelligence.
 
-**SustaShelf** addresses these challenges by exploring an automated workflow:
-
-```text
-                   ┌──────────────────────┐
-                   │       User           │
-                   │  Uploads Scrap Image │
-                   └──────────┬───────────┘
-                              │
-                              ▼
-                   ┌──────────────────────┐
-                   │    AI Detection      │
-                   │      YOLOv8          │
-                   └──────────┬───────────┘
-                              │
-                              ▼
-                   ┌──────────────────────┐
-                   │   Material & Qty.    │
-                   │      Detection       │
-                   └──────────┬───────────┘
-                              │
-                ┌─────────────┴─────────────┐
-                ▼                           ▼
-      ┌──────────────────┐        ┌──────────────────┐
-      │  Live Pricing    │        │ Pickup Request   │
-      │ MetalPriceAPI    │        │     Twilio       │
-      └────────┬─────────┘        └────────┬─────────┘
-               │                           │
-               └─────────────┬─────────────┘
-                             ▼
-                    ┌─────────────────┐
-                    │ Estimated Scrap │
-                    │      Value      │
-                    └─────────────────┘
+```
+                                  ┌──────────────────────────────┐
+                                  │      SUSTASHELF PLATFORM     │
+                                  └──────────────┬───────────────┘
+                                                 │
+                  ┌──────────────────────────────┴──────────────────────────────┐
+                  ▼                                                             ▼
+┌──────────────────────────────────────────┐               ┌──────────────────────────────────────────┐
+│  MODULE 1: ScrapBot (Operational Engine) │               │ MODULE 2: Strategic Pricing Intelligence │
+├──────────────────────────────────────────┤               ├──────────────────────────────────────────┤
+│ • Custom YOLOv8 Waste Vision Detection   │               │ • Prophet Time-Series Forecasting        │
+│ • Live Spot Pricing via MetalPriceAPI    │               │ • 6-Month Industrial Metal Projections   │
+│ • Automated Dispatch via Twilio SMS      │               │ • Interactive Streamlit Analytics UI     │
+└──────────────────────────────────────────┘               └──────────────────────────────────────────┘
 ```
 
-A separate **Predictive Metal Pricing** module extends the platform with future-oriented price analytics.
+### Complete End-to-End Workflow
 
----
-
-# 🧩 Project Modules
-
-## 🤖 1. ScrapBot — AI Scrap Detection & Collection
-
-ScrapBot is an intelligent chatbot designed to automate scrap identification, price estimation, and pickup requests.
-
-### Key Features
-
-* 📸 Upload scrap images through the chatbot
-* 🧠 Detect recyclable materials using a custom-trained **YOLOv8 model**
-* 🔢 Identify detected material types and quantities
-* 💰 Fetch current metal prices using **MetalPriceAPI**
-* 🧮 Calculate estimated scrap value
-* 📍 Capture user pickup location
-* 🕒 Capture preferred pickup time
-* 📩 Send pickup requests through **Twilio SMS**
-
-### Workflow
-
-```text
-User
- │
- │ Upload Image
- ▼
-Node.js / Express
- │
- │ Image
- ▼
-Flask ML API
- │
- │ YOLOv8 Inference
- ▼
-Detected Materials
- │
- │ Material + Quantity
- ▼
-MetalPriceAPI
- │
- ▼
-Price Calculation
- │
- ▼
-User Confirmation
- │
- ▼
-Twilio SMS
- │
- ▼
-Scrap Collector
 ```
-
-### Example
-
-```text
-Detected Scrap:
-
-metal: 2 × ₹58.10 = ₹116.20
-tin:   1 × ₹70.42 = ₹70.42
-
-Total Estimated Value: ₹186.62
-```
-
-### Technology
-
-| Component        | Technology            |
-| ---------------- | --------------------- |
-| Frontend         | HTML, CSS, JavaScript |
-| Backend          | Node.js, Express      |
-| ML API           | Python, Flask         |
-| Object Detection | YOLOv8 / Ultralytics  |
-| Pricing          | MetalPriceAPI         |
-| Communication    | Twilio SMS            |
-
-### Repository
-
-👉 **[View ScrapBot Repository](https://github.com/Bhoomi204/smart-recycle-chatbot)**
-
----
-
-# 📈 2. Predictive Metal Pricing
-
-The predictive analytics module focuses on forecasting future prices of major industrial metals.
-
-### Supported Metals
-
-* Lithium
-* Copper
-* Nickel
-* Aluminum
-* Cobalt
-
-### Key Features
-
-* 📊 Time-series forecasting using **Prophet**
-* 🔮 Six-month future price forecasting
-* 📈 Interactive Streamlit dashboard
-* ⚖️ Multi-metal comparison
-* 🏆 Identification of the highest-value projected metal
-* 🧩 Modular design for future integration with real datasets
-
-### Forecasting Workflow
-
-```text
-Historical / Synthetic Data
+[ User Uploads Scrap Photo ]
             │
             ▼
-     Data Preparation
+┌───────────────────────┐       ┌───────────────────────┐
+│ Flask CV Inference    ├──────►│ YOLOv8 Model          │ (17-Class Waste Detection)
+│ (custom_trained_api)  │       │ (best.pt)             │
+└───────────┬───────────┘       └───────────────────────┘
             │
             ▼
-      Prophet Model
+┌───────────────────────┐       ┌───────────────────────┐
+│ Dynamic Scrap         ├──────►│ MetalPriceAPI         │ (Real-Time Spot Rates)
+│ Valuation Engine      │       │ (Live Market API)     │
+└───────────┬───────────┘       └───────────────────────┘
             │
             ▼
-    Future Date Generation
-            │
-            ▼
-     6-Month Forecast
-            │
-            ▼
-   Streamlit Visualization
-            │
-            ▼
-   Metal Comparison & Ranking
-```
+┌───────────────────────┐       ┌───────────────────────┐
+│ Node.js/Express       ├──────►│ Twilio SMS Dispatch   │ (Notifies Local Collector with
+│ Dispatch Service      │       │ API                   │  Items, Location & Time)
+└───────────────────────┘       └───────────────────────┘
 
-### Technology
+───────────────────────────────────────────────────────────────────────────────────
 
-| Component       | Technology       |
-| --------------- | ---------------- |
-| Language        | Python           |
-| Forecasting     | Facebook Prophet |
-| Data Processing | Pandas           |
-| Visualization   | Matplotlib       |
-| Dashboard       | Streamlit        |
-
-### Repository
-
-👉 **[View Predictive Metal Pricing Repository](https://github.com/Bhoomi204/predictive-demand-analysis)**
-
-> **Note:** The current forecasting implementation uses synthetic data for demonstration. It is structured to support replacement with real historical or database-backed pricing data.
-
----
-
-# 🏗️ Overall Architecture
-
-SustaShelf is designed as a modular ecosystem where individual services can be independently developed and integrated.
-
-```text
-                         SUSTASHELF
-                             │
-              ┌──────────────┴──────────────┐
-              │                             │
-              ▼                             ▼
-        ┌───────────┐              ┌──────────────────┐
-        │ ScrapBot  │              │ Predictive       │
-        │           │              │ Metal Pricing    │
-        └─────┬─────┘              └────────┬─────────┘
-              │                             │
-       ┌──────┼───────┐                     │
-       │      │       │                     │
-       ▼      ▼       ▼                     ▼
-    YOLOv8  Pricing  Twilio              Prophet
-       │      API      │                     │
-       └──────┴────────┘                     │
-              │                              │
-              ▼                              ▼
-       Scrap Valuation              Future Price Analytics
+┌───────────────────────┐       ┌───────────────────────┐       ┌───────────────────────┐
+│ Prophet Time-Series   ├──────►│ 6-Month Trend         ├──────►│ Streamlit Dashboard   │
+│ Predictive Engine     │       │ Forecasting ($Cu,Al$) │       │ Interactive Analytics │
+└───────────────────────┘       └───────────────────────┘       └───────────────────────┘
 ```
 
 ---
 
-# 👩‍💻 Contributions
+## 🧩 Core Ecosystem Modules
 
-The following modules were independently developed as part of the SustaShelf project:
+### 🤖 1. ScrapBot — AI Scrap Detection & Automated Collection
+ScrapBot is the front-line operational chatbot interface that enables users to turn household and industrial scrap into instant valuation and schedule automated pickups.
 
-### ScrapBot
+* **Computer Vision Pipeline:** Powered by a custom-trained **YOLOv8m** model trained on a 17-class waste dataset (*cardboard, tin cans, plastic, copper wires, stainless steel, car body, etc.*) achieving **$42.4\%$ mAP@50** at $\sim 10.5\text{ ms}$ inference speed.
+* **Valuation Engine:** Pairs detected item counts directly with live metal market prices via **MetalPriceAPI** to yield itemized transparent estimates.
+* **Logistics Dispatch:** Node.js backend formats pickup details (item list, estimated payout, pickup window, geolocation) and dispatches an automated SMS alert to registered scrap collectors using **Twilio Programmable SMS**.
 
-* Developed the AI-powered scrap detection workflow using a custom YOLOv8 model.
-* Built the Flask-based ML inference API.
-* Developed Node.js/Express backend integration.
-* Integrated MetalPriceAPI for dynamic metal pricing.
-* Implemented scrap-value calculation based on detected material and quantity.
-* Integrated Twilio SMS for automated pickup notifications.
-* Implemented collection of pickup location and preferred pickup time.
-
-### Predictive Metal Pricing
-
-* Developed the Prophet-based time-series forecasting module.
-* Implemented six-month future price prediction for multiple metals.
-* Built the Streamlit dashboard for forecast visualization and comparison.
-* Implemented future-value ranking across supported metals.
-* Designed the module for future integration with real historical pricing sources.
+👉 **[View ScrapBot Source Repository](https://github.com/Bhoomi204/smart-recycle-chatbot)**
 
 ---
 
-# 🛠️ Technology Stack
+### 📈 2. Predictive Metal Pricing & Market Analytics
+The analytics engine empowers waste management businesses, recycling plants, and scrap aggregators with price trend intelligence to time bulk selling and optimize profit margins.
 
-### AI / Machine Learning
+* **Supported Industrial Metals:** Lithium ($Li$), Copper ($Cu$), Nickel ($Ni$), Aluminum ($Al$), and Cobalt ($Co$).
+* **Time-Series Forecasting:** Built using **Facebook Prophet** to forecast metal price trends over a 6-month horizon.
+* **Interactive Intelligence Dashboard:** Built with **Streamlit** for multi-metal price comparisons, projection visualization, and identifying high-value metal trends.
 
-* Python
-* YOLOv8
-* Ultralytics
-* Prophet
-
-### Backend
-
-* Node.js
-* Express.js
-* Flask
-* REST APIs
-
-### Frontend
-
-* HTML
-* CSS
-* JavaScript
-* Streamlit
-
-### External Services
-
-* MetalPriceAPI
-* Twilio
-* OpenAI API *(optional)*
-
-### Development Tools
-
-* Git
-* GitHub
-* VS Code
+👉 **[View ScrapBot Source Repository](https://github.com/Bhoomi204/predictive-demand-analysis)**
 
 ---
 
-# 📂 Repository Structure
+## 📊 AI Model Training & Performance
 
-The SustaShelf repository acts as the central project repository and provides links to the independently maintained modules.
+The vision model powering SustaShelf's core identification engine was fine-tuned on NVIDIA Tesla T4 GPUs using PyTorch and Ultralytics.
+
+| Metric | Valuation / Result |
+| :--- | :--- |
+| **Model Architecture** | Fine-tuned YOLOv8 Medium (`yolov8m.pt`) |
+| **Parameters / Complexity** | 25.8M parameters / 78.7 GFLOPs |
+| **Classes Trained** | 17 Recyclable Classes |
+| **Precision ($P$)** | $0.499$ |
+| **Recall ($R$)** | $0.406$ |
+| **mAP@50** | **$42.4\%$** |
+| **mAP@50-95** | **$35.5\%$** |
+| **Inference Speed** | $\sim 10.5\text{ ms / frame}$ |
+
+### Key Class Accuracy Highlights ($mAP@50$)
+* 📦 **Cardboard:** $83.1\%$
+* 🔍 **Camera Lens:** $69.5\%$
+* 🚗 **Car Body:** $66.6\%$
+* 🥫 **Disposable Aluminium:** $63.5\%$
+* 🛢️ **Tin Can:** $54.8\%$
+
+---
+
+## 🛠️ Complete Tech Stack
+
+| Domain | Technologies Used |
+| :--- | :--- |
+| **Computer Vision & ML** | Python 3.11, Ultralytics YOLOv8, PyTorch, OpenCV, Roboflow |
+| **Predictive Analytics** | Facebook Prophet, Pandas, NumPy, Matplotlib, Streamlit |
+| **Backend Services** | Node.js, Express.js, Python Flask (REST APIs) |
+| **Frontend Web** | HTML5, CSS3, JavaScript (Fetch API), Streamlit UI |
+| **Cloud & APIs** | MetalPriceAPI, Twilio Programmable SMS, OpenAI API (Optional) |
+| **DevOps & Tooling** | Git, GitHub, Dotenv |
+
+---
+
+## 📂 Ecosystem Directory Layout
 
 ```text
 SustaShelf/
+├── ScrapBot/                         # Module 1: Vision & Pickup Engine
+│   ├── Detection model/
+│   │   └── weights/
+│   │       └── best.pt               # Trained YOLOv8 model weights
+│   ├── bot.html                      # Interactive web interface
+│   ├── custom_trained_api.py         # Flask ML & MetalPriceAPI server
+│   ├── server.js                     # Express backend & Twilio dispatch
+│   └── package.json
 │
-├── README.md
+├── Predictive-Metal-Pricing/         # Module 2: Time-Series Market Engine
+│   ├── app.py                        # Streamlit dashboard application
+│   ├── forecasting.py                # Prophet model preparation & execution
+│   └── requirements.txt
 │
-├── ScrapBot
-│   └── External Repository
-│
-└── Predictive-Metal-Pricing
-    └── External Repository
+└── README.md                         # SustaShelf master documentation
 ```
 
 ---
 
-# 🔮 Future Improvements
+## 🚀 Execution & Setup Guide
 
-The platform can be extended with:
+### 1. Prerequisites
+* **Python:** Version 3.11 or higher
+* **Node.js:** Version 18 or higher
+* **Environment Configuration:** Create a `.env` file in the project root:
 
-* 🔗 Integration of ScrapBot and predictive pricing into a unified application
-* 🗄️ Real-time database for scrap transactions and pricing history
-* 📊 Historical metal-price data pipeline
-* 📉 Forecast evaluation using MAE, RMSE, and MAPE
-* ☁️ Cloud deployment of ML and backend services
-* 🔐 User authentication and secure pickup management
-* 🗺️ Map-based scrap collector assignment
-* 📱 Dedicated mobile application
-* 🔔 Automated notifications for pickup status
-* 📈 Historical analytics for scrap prices and collection trends
+```env
+PORT=3000
+METAL_PRICE_API_KEY=your_metalprice_api_key
+TWILIO_SID=your_twilio_account_sid
+TWILIO_AUTH=your_twilio_auth_token
+TWILIO_PHONE=your_twilio_virtual_phone
+KABADIWALA_PHONE=collector_phone_number
+```
 
----
+### 2. Launching ScrapBot (Vision & Dispatch Services)
 
-# ⚙️ Running the Modules
+```bash
+# Clone the main repository
+git clone https://github.com/Bhoomi204/smart-recycle-chatbot.git
+cd smart-recycle-chatbot
 
-Each module currently has its own setup and deployment instructions.
+# Install Dependencies
+npm install
+pip install -r requirements.txt
 
-### ScrapBot
+# Start Flask ML Server (Port 5000)
+python custom_trained_api.py
 
-See the dedicated repository:
+# In a new terminal, start Node Express Server (Port 3000)
+node server.js
+```
+*Access ScrapBot at `http://localhost:3000/bot.html`*
 
-👉 **[ScrapBot Setup & Documentation](https://github.com/Bhoomi204/smart-recycle-chatbot)**
+### 3. Launching Predictive Metal Analytics Dashboard
 
-### Predictive Metal Pricing
+```bash
+# Navigate to Predictive Engine directory
+cd Predictive-Metal-Pricing
 
-See the dedicated repository:
+# Install requirements
+pip install -r requirements.txt
 
-👉 **[Predictive Pricing Setup & Documentation](https://github.com/Bhoomi204/predictive-demand-analysis)**
+# Launch Streamlit App
+streamlit run app.py
+```
+*Access Market Dashboard at `http://localhost:8501`*
 
----
-
-# 📌 Project Status
-
-| Module                           | Status         |
-| -------------------------------- | -------------- |
-| AI Scrap Detection               | ✅ Developed    |
-| ScrapBot                         | ✅ Developed    |
-| Dynamic Metal Pricing            | ✅ Developed    |
-| SMS Pickup Requests              | ✅ Developed    |
-| Predictive Metal Pricing         | ✅ Developed    |
-| Unified Platform Integration     | 🔄 Future Work |
-| Real Historical Pricing Pipeline | 🔄 Future Work |
-| Cloud Deployment                 | 🔄 Future Work |
-
----
-
-# 📄 License
-
-This project is intended for academic and educational purposes.
 
 ---
-
-## 👥 Contributors
-
-**SustaShelf Project Team**
-
-Developed as a collaborative project exploring AI-assisted smart waste management.
-
----
-
-⭐ If you find this project interesting, consider giving the repository a star!
+*Developed as part of an end-to-end smart waste management and sustainability initiative.*
